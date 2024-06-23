@@ -36,3 +36,30 @@ The Online Bookstore API is a RESTful service built using Django and Django REST
    ```sh
    git clone https://github.com/yourusername/online-bookstore-api.git
    cd online-bookstore-api
+
+Create and activate a virtual environment:
+
+sh
+Copy code
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+Install dependencies:
+
+sh
+Copy code
+pip install -r requirements.txt
+Set up the database:
+
+sh
+Copy code
+python manage.py migrate
+Create a superuser:
+
+sh
+Copy code
+python manage.py createsuperuser
+Run the development server:
+
+sh
+Copy code
+python manage.py runserver
