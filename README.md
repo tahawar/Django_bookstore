@@ -48,90 +48,118 @@ The Online Bookstore API is a RESTful service built using Django and Django REST
    Run the development server:
    python manage.py runserver
 
-API Endpoints
-User Registration and Authentication
-Register: POST /api/register/
+# API Endpoints
 
-Request: { "username": "newuser", "password": "newpassword", "email": "newuser@example.com" }
-Response: { "id": 1, "username": "newuser", "email": "newuser@example.com" }
-Login: POST /api/login/
+## User Registration and Authentication
 
-Request: { "username": "testuser", "password": "testpassword" }
-Response: { "refresh": "token", "access": "token" }
-Logout: POST /api/logout/
+### Register
+- **POST** `/api/register/`
+  - **Request:** `{"username": "newuser", "password": "newpassword", "email": "newuser@example.com"}`
+  - **Response:** `{"id": 1, "username": "newuser", "email": "newuser@example.com"}`
 
-Request: { "refresh": "token" }
-Response: 204 No Content
-Books
-List Books: GET /api/books/
+### Login
+- **POST** `/api/login/`
+  - **Request:** `{"username": "testuser", "password": "testpassword"}`
+  - **Response:** `{"refresh": "token", "access": "token"}`
 
-Response: [ { "id": 1, "title": "Book Title", "author": "Author Name", ... }, ... ]
-Create Book: POST /api/books/
+### Logout
+- **POST** `/api/logout/`
+  - **Request:** `{"refresh": "token"}`
+  - **Response:** `204 No Content`
 
-Request: { "title": "New Book", "author": 1, "published_date": "2023-01-01", "isbn": "1234567890123", "category": 1, "summary": "Summary of the book", "price": 9.99 }
-Response: { "id": 1, "title": "New Book", "author": 1, ... }
-Retrieve Book: GET /api/books/{id}/
+## Books
 
-Response: { "id": 1, "title": "Book Title", "author": "Author Name", ... }
-Update Book: PUT /api/books/{id}/
+### List Books
+- **GET** `/api/books/`
+  - **Response:** `[{"id": 1, "title": "Book Title", "author": "Author Name", ...}, ...]`
 
-Request: { "title": "Updated Book", "author": 1, "published_date": "2023-01-01", "isbn": "1234567890123", "category": 1, "summary": "Updated summary", "price": 19.99 }
-Response: { "id": 1, "title": "Updated Book", "author": 1, ... }
-Delete Book: DELETE /api/books/{id}/
+### Create Book
+- **POST** `/api/books/`
+  - **Request:** `{"title": "New Book", "author": 1, "published_date": "2023-01-01", "isbn": "1234567890123", "category": 1, "summary": "Summary of the book", "price": 9.99}`
+  - **Response:** `{"id": 1, "title": "New Book", "author": 1, ...}`
 
-Response: 204 No Content
-Authors
-List Authors: GET /api/authors/
+### Retrieve Book
+- **GET** `/api/books/{id}/`
+  - **Response:** `{"id": 1, "title": "Book Title", "author": "Author Name", ...}`
 
-Response: [ { "id": 1, "first_name": "John", "last_name": "Doe", ... }, ... ]
-Create Author: POST /api/authors/
+### Update Book
+- **PUT** `/api/books/{id}/`
+  - **Request:** `{"title": "Updated Book", "author": 1, "published_date": "2023-01-01", "isbn": "1234567890123", "category": 1, "summary": "Updated summary", "price": 19.99}`
+  - **Response:** `{"id": 1, "title": "Updated Book", "author": 1, ...}`
 
-Request: { "first_name": "John", "last_name": "Doe", "date_of_birth": "1970-01-01", "date_of_death": "2020-01-01" }
-Response: { "id": 1, "first_name": "John", "last_name": "Doe", ... }
-Retrieve Author: GET /api/authors/{id}/
+### Delete Book
+- **DELETE** `/api/books/{id}/`
+  - **Response:** `204 No Content`
 
-Response: { "id": 1, "first_name": "John", "last_name": "Doe", ... }
-Update Author: PUT /api/authors/{id}/
+## Authors
 
-Request: { "first_name": "Jane", "last_name": "Doe", "date_of_birth": "1980-01-01", "date_of_death": "2020-01-01" }
-Response: { "id": 1, "first_name": "Jane", "last_name": "Doe", ... }
-Delete Author: DELETE /api/authors/{id}/
+### List Authors
+- **GET** `/api/authors/`
+  - **Response:** `[{"id": 1, "first_name": "John", "last_name": "Doe", ...}, ...]`
 
-Response: 204 No Content
-Categories
-List Categories: GET /api/categories/
+### Create Author
+- **POST** `/api/authors/`
+  - **Request:** `{"first_name": "John", "last_name": "Doe", "date_of_birth": "1970-01-01", "date_of_death": "2020-01-01"}`
+  - **Response:** `{"id": 1, "first_name": "John", "last_name": "Doe", ...}`
 
-Response: [ { "id": 1, "name": "Fiction" }, ... ]
-Create Category: POST /api/categories/
+### Retrieve Author
+- **GET** `/api/authors/{id}/`
+  - **Response:** `{"id": 1, "first_name": "John", "last_name": "Doe", ...}`
 
-Request: { "name": "Fiction" }
-Response: { "id": 1, "name": "Fiction" }
-Retrieve Category: GET /api/categories/{id}/
+### Update Author
+- **PUT** `/api/authors/{id}/`
+  - **Request:** `{"first_name": "Jane", "last_name": "Doe", "date_of_birth": "1980-01-01", "date_of_death": "2020-01-01"}`
+  - **Response:** `{"id": 1, "first_name": "Jane", "last_name": "Doe", ...}`
 
-Response: { "id": 1, "name": "Fiction" }
-Update Category: PUT /api/categories/{id}/
+### Delete Author
+- **DELETE** `/api/authors/{id}/`
+  - **Response:** `204 No Content`
 
-Request: { "name": "Science Fiction" }
-Response: { "id": 1, "name": "Science Fiction" }
-Delete Category: DELETE /api/categories/{id}/
+## Categories
 
-Response: 204 No Content
-Shopping Cart
-Add to Cart: POST /api/cart-items/
+### List Categories
+- **GET** `/api/categories/`
+  - **Response:** `[{"id": 1, "name": "Fiction"}, ...]`
 
-Request: { "book": 1, "quantity": 1 }
-Response: { "id": 1, "cart": 1, "book": 1, "quantity": 1 }
-List Cart Items: GET /api/cart-items/
+### Create Category
+- **POST** `/api/categories/`
+  - **Request:** `{"name": "Fiction"}`
+  - **Response:** `{"id": 1, "name": "Fiction"}`
 
-Response: [ { "id": 1, "cart": 1, "book": 1, "quantity": 1 }, ... ]
-Remove from Cart: DELETE /api/cart-items/{id}/
+### Retrieve Category
+- **GET** `/api/categories/{id}/`
+  - **Response:** `{"id": 1, "name": "Fiction"}`
 
-Response: 204 No Content
-Purchases
-Create Purchase: POST /api/purchases/
+### Update Category
+- **PUT** `/api/categories/{id}/`
+  - **Request:** `{"name": "Science Fiction"}`
+  - **Response:** `{"id": 1, "name": "Science Fiction"}`
 
-Response: { "id": 1, "user": 1, "created_at": "2023-01-01T00:00:00Z", "total_amount": 19.99 }
-List Purchases: GET /api/purchases/
+### Delete Category
+- **DELETE** `/api/categories/{id}/`
+  - **Response:** `204 No Content`
 
-Response: [ { "id": 1, "user": 1, "created_at": "2023-01-01T00:00:00Z", "total_amount": 19.99 }, ... ]
-   
+## Shopping Cart
+
+### Add to Cart
+- **POST** `/api/cart-items/`
+  - **Request:** `{"book": 1, "quantity": 1}`
+  - **Response:** `{"id": 1, "cart": 1, "book": 1, "quantity": 1}`
+
+### List Cart Items
+- **GET** `/api/cart-items/`
+  - **Response:** `[{"id": 1, "cart": 1, "book": 1, "quantity": 1}, ...]`
+
+### Remove from Cart
+- **DELETE** `/api/cart-items/{id}/`
+  - **Response:** `204 No Content`
+
+## Purchases
+
+### Create Purchase
+- **POST** `/api/purchases/`
+  - **Response:** `{"id": 1, "user": 1, "created_at": "2023-01-01T00:00:00Z", "total_amount": 19.99}`
+
+### List Purchases
+- **GET** `/api/purchases/`
+  - **Response:** `[{"id": 1, "user": 1, "created_at": "2023-01-01T00:00:00Z", "total_amount": 19.99}, ...]`
