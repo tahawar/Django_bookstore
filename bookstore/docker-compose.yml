@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: bookstore
+      POSTGRES_USER: bookstoreuser
+      POSTGRES_PASSWORD: 1234
+
+  redis:
+    image: redis:6
+
+  web:
+    build: .
+    command: python wait_for_postgres.py && python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+  celery:
+    build: .
+    command: python wait_for_postgres.py && celery -A bookstore worker -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+
+  celery-beat:
+    build: .
+    command: python wait_for_postgres.py && celery -A bookstore beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  postgres_data:
