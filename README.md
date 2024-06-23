@@ -163,3 +163,79 @@ The Online Bookstore API is a RESTful service built using Django and Django REST
 ### List Purchases
 - **GET** `/api/purchases/`
   - **Response:** `[{"id": 1, "user": 1, "created_at": "2023-01-01T00:00:00Z", "total_amount": 19.99}, ...]`
+  - 
+
+
+  # Docker Setup
+
+This project uses Docker to simplify the setup and deployment process. Follow the steps below to get the application running with Docker.
+
+## Docker Installation
+
+- **Install Docker:** If you don't already have Docker installed, [download and install it here](https://www.docker.com/get-started).
+
+## Building and Running the Application with Docker
+
+1. **Clone the repository:**
+
+    ```sh
+    git clone https://github.com/yourusername/online-bookstore-api.git
+    cd online-bookstore-api
+    ```
+
+2. **Create a `.env` file:** In the root directory of the project, create a `.env` file with the following content:
+
+    ```env
+    SECRET_KEY=your_secret_key
+    DEBUG=True
+    DATABASE_URL=postgres://user:password@db:5432/bookstore
+    EMAIL_HOST=smtp.sendgrid.net
+    EMAIL_HOST_USER=apikey
+    EMAIL_HOST_PASSWORD=your_sendgrid_api_key
+    EMAIL_PORT=587
+    ```
+
+3. **Build the Docker image:**
+
+    ```sh
+    docker-compose build
+    ```
+
+4. **Run the Docker containers:**
+
+    ```sh
+    docker-compose up
+    ```
+
+## Docker Compose Configuration
+
+The `docker-compose.yml` file is configured to run two services: `web` and `db`.
+
+```yaml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 bookstore.wsgi:application
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: bookstore
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+volumes:
+  postgres_data:
+
