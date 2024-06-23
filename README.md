@@ -239,3 +239,36 @@ services:
 volumes:
   postgres_data:
 
+
+## Dockerfile
+
+The Dockerfile sets up the environment and dependencies for the Django application.
+
+```dockerfile
+# Dockerfile
+FROM python:3.10-slim
+
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
+
+COPY . /app/
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "bookstore.wsgi:application"]
+
+
+Accessing the Application
+The application will be available at http://localhost:8000.
+
+Stopping the Application
+To stop the running containers:
+
+Press CTRL+C in the terminal where the containers are running.
+
+Alternatively, run:
+
+docker-compose down
+
